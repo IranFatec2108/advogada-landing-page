@@ -1,0 +1,150 @@
+<section
+  id="servicos"
+  class="services"
+  aria-labelledby="services-title"
+>
+  <div class="services__container">
+    <div class="services__header">
+      <p class="services__eyebrow">
+        <span aria-hidden="true"></span>
+        Áreas de atuação
+      </p>
+
+      <h2 id="services-title" class="services__title">
+        Estratégia para decisões que exigem clareza.
+      </h2>
+
+      <p class="services__intro">
+        Cada situação jurídica possui particularidades próprias. Por isso, a
+        orientação deve ser construída com atenção, precisão e compreensão do
+        contexto de cada cliente.
+      </p>
+    </div>
+
+    <!-- Carrossel mobile e tablet -->
+    <div
+      class="services__mobile"
+      role="region"
+      aria-roledescription="carrossel"
+      aria-label="Áreas de atuação"
+    >
+      <div class="services__mobile-controls">
+        <span aria-live="polite">
+       {{ currentPosition() }} / {{ totalPosition }}
+        </span>
+
+        <div class="services__arrows">
+          <button
+            type="button"
+            class="services__arrow"
+            aria-label="Serviço anterior"
+            (click)="previous()"
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+
+          <button
+            type="button"
+            class="services__arrow"
+            aria-label="Próximo serviço"
+            (click)="next()"
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="services__viewport">
+        <div
+          class="services__track"
+          [style.transform]="'translateX(-' + activeIndex() * 100 + '%)'"
+        >
+          @for (service of services; track service.id; let index = $index) {
+            <article
+              class="service-card service-card--mobile"
+              [attr.aria-hidden]="index !== activeIndex()"
+            >
+              <div class="service-card__top">
+                <span class="service-card__number">
+                  {{ service.number }}
+                </span>
+
+                <span
+                  class="service-card__line"
+                  aria-hidden="true"
+                ></span>
+              </div>
+
+              <div class="service-card__content">
+                <h3 class="service-card__title">
+                  {{ service.title }}
+                </h3>
+
+                <p class="service-card__description">
+                  {{ service.description }}
+                </p>
+              </div>
+
+              <a
+                href="#contato"
+                class="service-card__link"
+              >
+                Conversar sobre esta área
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          }
+        </div>
+      </div>
+
+      <div class="services__indicators">
+        @for (service of services; track service.id; let index = $index) {
+          <button
+            type="button"
+            class="services__indicator"
+            [class.services__indicator--active]="index === activeIndex()"
+            [attr.aria-label]="'Ir para o serviço ' + service.number"
+            [attr.aria-current]="index === activeIndex() ? 'true' : null"
+            (click)="goTo(index)"
+          ></button>
+        }
+      </div>
+    </div>
+
+    <!-- Grade desktop -->
+    <div class="services__desktop">
+      @for (service of services; track service.id) {
+        <article class="service-card">
+          <div class="service-card__top">
+            <span class="service-card__number">
+              {{ service.number }}
+            </span>
+
+            <span
+              class="service-card__line"
+              aria-hidden="true"
+            ></span>
+          </div>
+
+          <div class="service-card__content">
+            <h3 class="service-card__title">
+              {{ service.title }}
+            </h3>
+
+            <p class="service-card__description">
+              {{ service.description }}
+            </p>
+          </div>
+
+          <a
+            href="#contato"
+            class="service-card__link"
+          >
+            Conversar sobre esta área
+            <span aria-hidden="true">→</span>
+          </a>
+        </article>
+      }
+    </div>
+  </div>
+</section>

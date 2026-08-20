@@ -1,0 +1,327 @@
+:host {
+  display: block;
+  background: #f7f5f0;
+  color: #1f2428;
+}
+
+.contact {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(5rem, 9vw, 8rem) 1.5rem;
+}
+
+.contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(72rem, 90%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(157, 122, 63, 0.5),
+    transparent
+  );
+  transform: translateX(-50%);
+}
+
+.contact::after {
+  content: '';
+  position: absolute;
+  right: -10rem;
+  bottom: -14rem;
+  width: 28rem;
+  height: 28rem;
+  border: 1px solid rgba(157, 122, 63, 0.14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.contact__container {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(26rem, 1.15fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  width: min(72rem, 100%);
+  margin: 0 auto;
+  align-items: start;
+}
+
+.contact__intro {
+  padding-top: 1rem;
+}
+
+.contact__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+  color: #9d7a3f;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.contact__eyebrow span {
+  display: inline-block;
+  width: 2rem;
+  height: 1px;
+  background: #9d7a3f;
+}
+
+.contact__title {
+  max-width: 34rem;
+  margin: 0;
+  color: #20272b;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.contact__description {
+  max-width: 31rem;
+  margin: 1.75rem 0 0;
+  color: #626a6d;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba(157, 122, 63, 0.28);
+  background: #fffefa;
+  box-shadow: 0 1.25rem 3rem rgba(31, 36, 40, 0.07);
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.contact__field label {
+  color: #30383b;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact__field input,
+.contact__field select,
+.contact__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #d8d3c9;
+  border-radius: 0;
+  outline: none;
+  background: #fffefa;
+  color: #20272b;
+  font: inherit;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.contact__field input,
+.contact__field select {
+  min-height: 3.3rem;
+  padding: 0.8rem 1rem;
+}
+
+.contact__field textarea {
+  min-height: 9rem;
+  padding: 1rem;
+  resize: vertical;
+}
+
+.contact__field input::placeholder,
+.contact__field textarea::placeholder {
+  color: #9a9b96;
+  opacity: 1;
+}
+
+.contact__field select {
+  cursor: pointer;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #9d7a3f 50%),
+    linear-gradient(135deg, #9d7a3f 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.2rem) 1.4rem,
+    calc(100% - 0.9rem) 1.4rem;
+  background-repeat: no-repeat;
+  background-size:
+    0.3rem 0.3rem,
+    0.3rem 0.3rem;
+}
+
+.contact__field select:invalid {
+  color: #9a9b96;
+}
+
+.contact__field input:focus,
+.contact__field select:focus,
+.contact__field textarea:focus {
+  border-color: #9d7a3f;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(157, 122, 63, 0.16);
+}
+
+.contact__field input[aria-invalid='true'],
+.contact__field select[aria-invalid='true'],
+.contact__field textarea[aria-invalid='true'] {
+  border-color: #a84e46;
+}
+
+.contact__field input[aria-invalid='true']:focus,
+.contact__field select[aria-invalid='true']:focus,
+.contact__field textarea[aria-invalid='true']:focus {
+  box-shadow: 0 0 0 3px rgba(168, 78, 70, 0.14);
+}
+
+.contact__error {
+  margin: 0.05rem 0 0;
+  color: #a84e46;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.contact__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.25rem;
+  border: 1px solid #9d7a3f;
+  border-radius: 0;
+  background: #9d7a3f;
+  color: #fffefa;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.contact__submit span {
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.contact__submit:hover {
+  border-color: #80612e;
+  background: #80612e;
+  box-shadow: 0 0.75rem 1.5rem rgba(128, 97, 46, 0.2);
+  transform: translateY(-2px);
+}
+
+.contact__submit:hover span {
+  transform: translateX(0.25rem);
+}
+
+.contact__submit:focus-visible {
+  outline: 3px solid rgba(157, 122, 63, 0.35);
+  outline-offset: 4px;
+}
+
+.contact__submit:active {
+  transform: translateY(0);
+}
+
+.contact__notice {
+  margin: -0.3rem 0 0;
+  color: #7d807d;
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .contact__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .contact__intro {
+    max-width: 40rem;
+    padding-top: 0;
+  }
+
+  .contact__title {
+    max-width: 42rem;
+  }
+
+  .contact__description {
+    max-width: 38rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .contact {
+    padding: 4rem 1rem;
+  }
+
+  .contact__container {
+    gap: 2.5rem;
+  }
+
+  .contact__title {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .contact__description {
+    margin-top: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .contact__form {
+    gap: 1.15rem;
+    padding: 1.25rem;
+  }
+
+  .contact__field input,
+  .contact__field select {
+    min-height: 3.1rem;
+  }
+
+  .contact__submit {
+    min-height: 3.35rem;
+    font-size: 0.74rem;
+  }
+}
+
+/* Reduz animações para usuários que preferem menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .contact__field input,
+  .contact__field select,
+  .contact__field textarea,
+  .contact__submit,
+  .contact__submit span {
+    transition: none;
+  }
+}

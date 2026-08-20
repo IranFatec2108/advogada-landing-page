@@ -1,0 +1,153 @@
+<!-- src/app/shared/layout/header/header.html -->
+
+<header
+  class="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-base/95 backdrop-blur-md"
+>
+  <div
+    class="mx-auto grid h-20 max-w-7xl grid-cols-[1fr_auto] items-center px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-10"
+  >
+    <!-- Identidade da marca -->
+    <button
+      type="button"
+      class="group flex items-center lg:justify-self-start"
+      aria-label="Voltar ao início"
+      (click)="navigateTo('inicio')"
+    >
+      <span
+        class="relative flex h-14 w-20 items-start justify-center overflow-hidden"
+        aria-hidden="true"
+      >
+        <img
+          src="/assets/images/logo-preta.jpg"
+          alt=""
+          class="absolute left-1/2 top-0 h-auto w-[115px] max-w-none -translate-x-1/2 transition-opacity duration-200 group-hover:opacity-75"
+        />
+      </span>
+    </button>
+
+    <!-- Navegação desktop centralizada -->
+    <nav
+      class="hidden items-center gap-1 lg:flex lg:justify-self-center"
+      aria-label="Navegação principal"
+    >
+      @for (item of navigationItems; track item.id) {
+        <button
+          type="button"
+          class="rounded-full px-4 py-2 text-sm tracking-wide text-text-primary transition-all duration-200 hover:bg-secondary/5 hover:text-accent"
+          (click)="navigateTo(item.target)"
+        >
+          {{ item.label }}
+        </button>
+      }
+    </nav>
+
+    <!-- CTA desktop: continua direcionando para o formulário -->
+    <button
+      type="button"
+      class="hidden border border-secondary bg-secondary px-5 py-3 text-xs font-semibold uppercase tracking-[0.12em] text-base transition-colors hover:border-accent hover:bg-accent lg:block lg:justify-self-end"
+      (click)="navigateTo('contato')"
+    >
+      Falar comigo
+    </button>
+
+    <!-- Botão mobile -->
+    <button
+      type="button"
+      class="flex h-11 w-11 items-center justify-center justify-self-end border border-black/10 text-text-primary transition-colors hover:border-accent hover:text-accent lg:hidden"
+      aria-label="Abrir menu"
+      aria-controls="mobile-navigation"
+      [attr.aria-expanded]="isMenuOpen()"
+      (click)="toggleMenu()"
+    >
+      <span class="text-xl" aria-hidden="true">☰</span>
+    </button>
+  </div>
+</header>
+
+<!-- Overlay -->
+<button
+  type="button"
+  class="fixed inset-0 z-[60] bg-black/40 transition-opacity duration-300 ease-out lg:hidden"
+  [class.pointer-events-none]="!isMenuOpen()"
+  [class.pointer-events-auto]="isMenuOpen()"
+  [class.opacity-0]="!isMenuOpen()"
+  [class.opacity-100]="isMenuOpen()"
+  aria-label="Fechar menu"
+  tabindex="-1"
+  (click)="closeMenu()"
+></button>
+
+<!-- Drawer lateral -->
+<aside
+  id="mobile-navigation"
+  class="fixed inset-y-0 right-0 z-[70] flex w-[min(88vw,380px)] flex-col bg-base px-7 py-6 shadow-2xl transition-all duration-300 ease-out lg:hidden"
+  [class.pointer-events-none]="!isMenuOpen()"
+  [class.pointer-events-auto]="isMenuOpen()"
+  [class.translate-x-full]="!isMenuOpen()"
+  [class.translate-x-0]="isMenuOpen()"
+  [class.opacity-0]="!isMenuOpen()"
+  [class.opacity-100]="isMenuOpen()"
+  [attr.aria-hidden]="!isMenuOpen()"
+  aria-label="Menu mobile"
+>
+  <!-- Cabeçalho do drawer -->
+  <div class="flex items-center justify-between border-b border-black/10 pb-6">
+    <span
+      class="relative flex h-14 w-14 items-start justify-center overflow-hidden"
+      aria-hidden="true"
+    >
+      <img
+        src="/assets/images/logo-preta.jpg"
+        alt=""
+        class="absolute left-1/2 top-0 h-auto w-[145px] max-w-none -translate-x-1/2"
+      />
+    </span>
+
+    <button
+      type="button"
+      class="flex h-10 w-10 items-center justify-center text-2xl text-text-primary transition-colors hover:text-accent"
+      aria-label="Fechar menu"
+      (click)="closeMenu()"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+
+  <!-- Navegação mobile -->
+  <nav
+    class="flex flex-1 flex-col justify-center gap-2"
+    aria-label="Navegação mobile"
+  >
+    @for (item of navigationItems; track item.id; let index = $index) {
+      <button
+        type="button"
+        class="border-b border-black/10 py-5 text-left font-serif text-2xl text-text-primary transition-all duration-300 ease-out hover:pl-2 hover:text-accent"
+        [style.transitionDelay.ms]="index * 70"
+        [class.translate-x-6]="!isMenuOpen()"
+        [class.translate-x-0]="isMenuOpen()"
+        [class.opacity-0]="!isMenuOpen()"
+        [class.opacity-100]="isMenuOpen()"
+        (click)="navigateTo(item.target)"
+      >
+        {{ item.label }}
+      </button>
+    }
+  </nav>
+
+  <!-- CTA mobile: abre o WhatsApp diretamente -->
+  <a
+    class="flex w-full items-center justify-center border border-secondary bg-secondary px-5 py-4 text-xs font-semibold uppercase tracking-[0.12em] text-base transition-all duration-300 ease-out hover:border-accent hover:bg-accent"
+    [style.transitionDelay.ms]="navigationItems.length * 70"
+    [class.translate-y-4]="!isMenuOpen()"
+    [class.translate-y-0]="isMenuOpen()"
+    [class.opacity-0]="!isMenuOpen()"
+    [class.opacity-100]="isMenuOpen()"
+    href="https://wa.me/5519999880904?text=Ol%C3%A1%2C%20Dra.%20Ana%20Carolina.%20Encontrei%20seu%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es."
+    target="_blank"
+    rel="noopener noreferrer"
+    (click)="closeMenu()"
+  >
+    Falar pelo WhatsApp
+    <span class="ml-2 text-base" aria-hidden="true">↗</span>
+  </a>
+</aside>

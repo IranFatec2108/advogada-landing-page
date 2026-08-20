@@ -1,0 +1,117 @@
+<section
+  id="contato"
+  class="contact"
+  aria-labelledby="contact-title"
+>
+  <div class="contact__container">
+    <div class="contact__intro">
+      <p class="contact__eyebrow">
+        <span aria-hidden="true"></span>
+        Vamos conversar
+      </p>
+
+      <h2 id="contact-title" class="contact__title">
+        Uma orientação clara pode ser o primeiro passo.
+      </h2>
+
+      <p class="contact__description">
+        Conte brevemente o que você precisa. A mensagem será organizada e
+        encaminhada pelo WhatsApp para facilitar o primeiro contato.
+      </p>
+    </div>
+
+    <form
+      class="contact__form"
+      [formGroup]="contactForm"
+      (ngSubmit)="submit()"
+      novalidate
+    >
+      <div class="contact__field">
+        <label for="name">Nome</label>
+
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          placeholder="Como podemos chamar você?"
+          autocomplete="name"
+          [attr.aria-invalid]="hasError('name', 'required') || hasError('name', 'minlength')"
+          [attr.aria-describedby]="hasError('name', 'required') || hasError('name', 'minlength') ? 'name-error' : null"
+        />
+
+        @if (hasError('name', 'required')) {
+          <p id="name-error" class="contact__error">
+            Informe seu nome.
+          </p>
+        } @else if (hasError('name', 'minlength')) {
+          <p id="name-error" class="contact__error">
+            Informe seu nome completo.
+          </p>
+        }
+      </div>
+
+      <div class="contact__field">
+        <label for="area">Área de interesse</label>
+
+        <select
+          id="area"
+          formControlName="area"
+          [attr.aria-invalid]="hasError('area', 'required')"
+          [attr.aria-describedby]="hasError('area', 'required') ? 'area-error' : null"
+        >
+          <option value="" disabled>
+            Selecione uma área
+          </option>
+
+          @for (area of areas; track area) {
+            <option [value]="area">
+              {{ area }}
+            </option>
+          }
+        </select>
+
+        @if (hasError('area', 'required')) {
+          <p id="area-error" class="contact__error">
+            Selecione uma área de interesse.
+          </p>
+        }
+      </div>
+
+      <div class="contact__field">
+        <label for="message">Como podemos ajudar?</label>
+
+        <textarea
+          id="message"
+          formControlName="message"
+          rows="6"
+          placeholder="Descreva brevemente a situação..."
+          [attr.aria-invalid]="hasError('message', 'required') || hasError('message', 'minlength')"
+          [attr.aria-describedby]="hasError('message', 'required') || hasError('message', 'minlength') ? 'message-error' : null"
+        ></textarea>
+
+        @if (hasError('message', 'required')) {
+          <p id="message-error" class="contact__error">
+            Escreva uma breve descrição da situação.
+          </p>
+        } @else if (hasError('message', 'minlength')) {
+          <p id="message-error" class="contact__error">
+            Escreva pelo menos 10 caracteres.
+          </p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="contact__submit"
+      >
+        Continuar pelo WhatsApp
+        <span aria-hidden="true">→</span>
+      </button>
+
+      <p class="contact__notice">
+        Ao continuar, o WhatsApp será aberto com uma mensagem previamente
+        organizada para facilitar o primeiro contato.
+      </p>
+    </form>
+  </div>
+</section>
