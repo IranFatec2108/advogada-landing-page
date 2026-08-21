@@ -21,7 +21,6 @@
       </p>
     </div>
 
-    <!-- Carrossel mobile e tablet -->
     <div
       class="services__mobile"
       role="region"
@@ -30,7 +29,7 @@
     >
       <div class="services__mobile-controls">
         <span aria-live="polite">
-       {{ currentPosition() }} / {{ totalPosition }}
+          {{ currentPosition() }} / {{ totalPosition }}
         </span>
 
         <div class="services__arrows">
@@ -81,17 +80,29 @@
                 </h3>
 
                 <p class="service-card__description">
-                  {{ service.description }}
+                  {{ service.summary }}
                 </p>
               </div>
 
-              <a
-                href="#contato"
-                class="service-card__link"
-              >
-                Conversar sobre esta área
-                <span aria-hidden="true">→</span>
-              </a>
+              <div class="service-card__actions">
+                <button
+                  type="button"
+                  class="service-card__details"
+                  (click)="openDetails(service)"
+                  [attr.aria-label]="'Saiba mais sobre ' + service.title"
+                >
+                  Saiba mais
+                  <span aria-hidden="true">↗</span>
+                </button>
+
+                <a
+                  href="#contato"
+                  class="service-card__link"
+                >
+                  Conversar sobre esta área
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </article>
           }
         </div>
@@ -111,7 +122,6 @@
       </div>
     </div>
 
-    <!-- Grade desktop -->
     <div class="services__desktop">
       @for (service of services; track service.id) {
         <article class="service-card">
@@ -132,19 +142,90 @@
             </h3>
 
             <p class="service-card__description">
-              {{ service.description }}
+              {{ service.summary }}
             </p>
           </div>
 
-          <a
-            href="#contato"
-            class="service-card__link"
-          >
-            Conversar sobre esta área
-            <span aria-hidden="true">→</span>
-          </a>
+          <div class="service-card__actions">
+            <button
+              type="button"
+              class="service-card__details"
+              (click)="openDetails(service)"
+              [attr.aria-label]="'Saiba mais sobre ' + service.title"
+            >
+              Saiba mais
+              <span aria-hidden="true">↗</span>
+            </button>
+
+            <a
+              href="#contato"
+              class="service-card__link"
+            >
+              Conversar sobre esta área
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </article>
       }
     </div>
   </div>
 </section>
+
+<dialog
+  id="service-details-dialog"
+  class="service-dialog"
+  aria-labelledby="service-dialog-title"
+  (click)="closeOnBackdrop($event)"
+>
+  @if (selectedService(); as service) {
+    <div class="service-dialog__panel">
+      <button
+        type="button"
+        class="service-dialog__close"
+        aria-label="Fechar detalhes do serviço"
+        autofocus
+        (click)="closeDetails()"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+
+      <div class="service-dialog__image-wrapper">
+        <img
+          class="service-dialog__image"
+          [src]="service.imageUrl"
+          [alt]="'Imagem relacionada a ' + service.title"
+        />
+      </div>
+
+      <div class="service-dialog__content">
+        <p class="service-dialog__eyebrow">
+          Área de atuação {{ service.number }}
+        </p>
+
+        <h2
+          id="service-dialog-title"
+          class="service-dialog__title"
+        >
+          {{ service.title }}
+        </h2>
+
+        <p class="service-dialog__summary">
+          {{ service.summary }}
+        </p>
+
+        <p class="service-dialog__description">
+          {{ service.description }}
+        </p>
+
+        <button
+          type="button"
+          class="service-dialog__contact"
+          (click)="talkAboutService(service)"
+        >
+          Falar sobre este assunto
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  }
+</dialog>

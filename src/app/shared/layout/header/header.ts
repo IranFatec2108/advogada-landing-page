@@ -69,6 +69,16 @@ export class Header {
     });
   }
 
+  openWhatsApp(): void {
+    const whatsappUrl = this.lawyer.getWhatsAppLink(
+      'Olá, Dra. Ana Carolina. Encontrei seu site e gostaria de conversar.',
+    );
+
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+
+    this.closeMenu();
+  }
+
   @HostListener('document:keydown.escape')
   handleEscapeKey(): void {
     this.closeMenu();

@@ -1,12 +1,21 @@
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
+
 import {
   FormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 
+import { Lawyer } from '../../core/state/lawyer';
+
 @Component({
   selector: 'app-contact',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
@@ -14,7 +23,10 @@ import {
 export class Contact {
   private readonly formBuilder = inject(FormBuilder);
 
-  private readonly whatsappNumber = '5519999880904';
+  private readonly lawyer = inject(Lawyer);
+
+  private readonly whatsappNumber =
+    '5519999880904';
 
   readonly submitted = signal(false);
 
@@ -27,11 +39,39 @@ export class Contact {
     'Assessoria empresarial',
   ];
 
-  readonly contactForm = this.formBuilder.nonNullable.group({
-    name: ['', [Validators.required, Validators.minLength(2)]],
-    area: ['', Validators.required],
-    message: ['', [Validators.required, Validators.minLength(10)]],
-  });
+  readonly contactForm =
+    this.formBuilder.nonNullable.group({
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+        ],
+      ],
+      area: ['', Validators.required],
+      message: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+        ],
+      ],
+    });
+
+  constructor() {
+    effect(() => {
+      const selectedService =
+        this.lawyer.selectedService();
+
+      if (!selectedService) {
+        return;
+      }
+
+      this.contactForm.patchValue({
+        area: selectedService,
+      });
+    });
+  }
 
   submit(): void {
     this.submitted.set(true);
@@ -41,7 +81,11 @@ export class Contact {
       return;
     }
 
-    const { name, area, message } = this.contactForm.getRawValue();
+    const {
+      name,
+      area,
+      message,
+    } = this.contactForm.getRawValue();
 
     const whatsappMessage = [
       'Olá, Dra. Ana Carolina.',
@@ -55,18 +99,25 @@ export class Contact {
       'Encontrei seu contato pelo site.',
     ].join('\n');
 
-    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const encodedMessage =
+      encodeURIComponent(whatsappMessage);
+
     const whatsappUrl =
       `https://wa.me/${this.whatsappNumber}?text=${encodedMessage}`;
 
-    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    window.open(
+      whatsappUrl,
+      '_blank',
+      'noopener,noreferrer',
+    );
   }
 
   hasError(
     controlName: 'name' | 'area' | 'message',
     errorName: string,
   ): boolean {
-    const control = this.contactForm.controls[controlName];
+    const control =
+      this.contactForm.controls[controlName];
 
     return (
       control.hasError(errorName) &&
